@@ -30,6 +30,8 @@ Each one of this classes can be described as following:
 - **Components**: A list of elements that are going to describe visually the
   process, results, conclusions, notes, etc.
 
+For a more detailed implementation please check the [`schemas definition`](./schemas)
+
 ## Community
 
 - [MIT License](.LICENSE)
