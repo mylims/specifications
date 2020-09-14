@@ -8,7 +8,7 @@ Each element that describes somehow the visual interface and relates an
 importance of a notebook is stored as a class. The relations between the classes
 look like this:
 
-[![Database proposal][db_proposal]][db_proposal]
+[![Database proposal][db_proposal]][db_editable]
 
 Has to be taken in account that the selected database is a NoSQL database,
 therefore the classes don’t have to be in different collections and that all the
@@ -39,3 +39,4 @@ For a more detailed implementation please check the [`schemas definition`](./sch
 - [Code of conduct](CODE_OF_CONDUCT.md)
 
 [db_proposal]: ./docs/db_proposal.png
+[db_editable]: https://drive.google.com/file/d/124ZshwQydHyD_vGyoN6vkqrXGBr860uv/view?usp=sharing
