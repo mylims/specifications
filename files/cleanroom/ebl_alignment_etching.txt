@@ -1,0 +1,11 @@
+General comment: Deep etching of GaN
+
+Description:
+
+This recipe can be followed for deep etching of GaN with an etch rate of 150 nm/min. Process done at CMi.
+
+Steps
+
+Sample preparation: Warm a wafer up to 135 C, use quick stick gel and put the sample on top. Later let the wafer cool down.
+Process run: Time: 3' Estimated etch depth: 450 nm
+Sample unload: Warm the wafer up to 135 C and remove the sample on top. Later let the wafer and the sample cool down.

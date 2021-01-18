@@ -1,0 +1,434 @@
+
+#	System 200011, AIX200/4HT-S
+#
+#	Recipe name:  MchHEMT 
+#	based on run  A3906
+#				
+#	edited by Pirouz, 2019
+#	
+#	comment:
+#	MO sources:         	TMAl_1 @ 17°C, 1000 mbar, N2
+#				Cp2Mg_1 @ 17°C, 1000 mbar, H2
+#	                   	TMGa_1  @ 0°C, 1000 mbar, H2
+#				TEGa_1 @ 17°C, 1000 mbar, N2
+#				TMIn_1 @ 17°C, 400 mbar, N2	
+#			
+# Calibration parameters #############################################################
+#
+ProcessData =
+ WaterTempOut WaterTempIn Lauda_1 Lauda_2
+ Lauda_3 Lauda_5 RF_I RF_U ReactorTemp
+ DORPress dP_Filter Position ReactorPress;
+layer {
+	5:00	"wait";
+	0:10	DORVac = open;
+	0:05	"init sources and flows", TMGa_1.source = 10,
+		TMGa_1.push = 390,
+		TMGa_1.press = 1000,
+		TEGa_1.source = 200,
+		TEGa_1.push = 300,
+		TEGa_1.press = 1000,
+		TMAl_1.source = 100,
+		TMAl_1.push = 300,
+		TMAl_1.press = 1000,
+		TMIn_1.source = 430,
+		TMIn_1.push = 70,
+		TMIn_1.press = 400,
+		NH3_1.source = 1000,
+		NH3_1.push = default,
+		SiH4_1.source = 3,
+		SiH4_1.dilute = 500,
+		SiH4_1.inject = 10,
+		SiH4_1.push = 90,
+		SiH4_1.press = 1200,
+		Cp2Mg_1.source = 50,
+		Cp2Mg_1.push = 350,
+		Cp2Mg_1.press = 1000,
+		NH3_2.source = 50,
+		DummyMO2.source = 500,
+		Cp2Mg_1.run = open,
+		RunMO1 = 1000,
+		RunMO2 = 1000,
+		PushMO1 = 150,
+		PushMO2 = 150,
+		VentMO1 = default,
+		VentMO2 = default,
+		RunHydride = 2000,
+		PushHydride = 2800,
+		VentHydride = default,
+		Rotation = 200,
+		LightPipePurge = 20,
+		LinerPurge = 2500,
+		WindowPurge1 = 250,
+		WindowPurge2 = 250,
+		WindowPurge3 = 250;
+	0:05	"init system", MainPump = on,
+		IGS = on,
+		Control = off,
+		ReactorPress = 980,
+		Cooling = on,
+		Heater = off,
+		DORVac = open,
+		PumpBypass = close;
+	0:02	"open VentVac", VentVac = open;
+		"wait for timer", until VentVac == open;
+	0:02	"take contol", DORVac = close, Control = on;
+	0:05	"init gases, N2", N2.line = open,
+		N2.run = open,
+		H2.run = close,
+		H2.line = close,
+		N2MO1.line = open,
+		H2MO1.line = close,
+		N2MO2.line = open,
+		H2MO2.line = close,
+		H2PushHyd = close,
+		H2PushMO1 = close,
+		H2PushMO2 = close,
+		Window = close,
+		H2LinerPurge = close,
+		H2Rotation = close;
+	# Heat Up #########################################################################
+	3:00	"ramp down pressure", ReactorPress to 100,
+		Rotation to 40,
+		RF_U = 2;
+	1:00	"ramp up power", Heater = on, RF_U to 30;
+		"wait until temperature > 110C", until ReactorTemp >> 110;
+	0:05	"take temperature control", ReactorTemp = 150;
+	3:00	"ramp up temperature to 600", ReactorTemp to 600;
+	4:00	"ramp to desorption conditions and no prep SiH4", ReactorTemp to 1000,
+		ReactorPress to 200 in 1:00,
+		Rotation to 10,
+		RunHydride to 2000,
+		PushHydride to 1300,
+		SiH4_1.source to 10,
+		SiH4_1.dilute to 70,
+		SiH4_1.inject to 10,
+		NH3_1.line = open,
+		NH3_1.run = open;
+	1:00	"desorb";
+	# GaN #########################################################
+	1:00	"go to GaN nid conditions", ReactorTemp to 1065,
+		ReactorPress to 200,
+		SiH4_1.line = close,
+		SiH4_1.source to 10,
+		SiH4_1.dilute to 70,
+		SiH4_1.inject to 10,
+		TMGa_1.line = open,
+		TMGa_1.source to 27,
+		TMGa_1.push to 473,
+		TMAl_1.source to 100,
+		TMAl_1.push to 100,
+		TMIn_1.source to 250,
+		TMIn_1.push to 250,
+		Cp2Mg_1.source to 50,
+		Cp2Mg_1.push to 450,
+		Cp2Mg_1.run = open,
+		DummyMO2.source to 500,
+		DummyMO2.run = close,
+		NH3_1.source to 1500,
+		RunHydride to 1000,
+		PushHydride to 1000,
+		RunMO1 to 500,
+		RunMO2 to 500,
+		PushMO1 to 150,
+		PushMO2 to 150;
+	1:00	"stabilize and H2", N2.line = close,
+		H2.line = open,
+		N2.run = close,
+		H2.run = open,
+		N2MO1.line = close,
+		H2MO1.line = open,
+		H2PushHyd = open,
+		H2PushMO1 = open,
+		H2PushMO2 = open,
+		Window = open,
+		H2LinerPurge = open;
+	19:00	"grow nid GaN ", TMGa_1.run = open,
+		Cp2Mg_1.run = close,
+		SiH4_1.run = close,
+		PushHydride = 1000;
+	1:00	"prep TMIn", TMIn_1.line = open;
+	1:00	"stop and change with TMIn to AlInN conditions 68 nmh AlN 90nm GaN", ReactorTemp to 975,
+		ReactorPress to 75,
+		LinerPurge to 2500,
+		Rotation to 10,
+		H2MO1.line = close,
+		N2MO1.line = open,
+		N2.line = open,
+		H2.line = close,
+		N2.run = open,
+		H2.run = close,
+		H2PushHyd = close,
+		H2PushMO1 = close,
+		H2PushMO2 = close,
+		Window = close,
+		H2LinerPurge = close,
+		NH3_1.source to 2000,
+		RunHydride to 1250,
+		PushHydride to 1250,
+		RunMO1 to 500,
+		RunMO2 to 500,
+		PushMO1 to 300,
+		PushMO2 to 300,
+		Cp2Mg_1.source to 50,
+		Cp2Mg_1.push to 350,
+		Cp2Mg_1.run = open,
+		Cp2Mg_1.line = close,
+		DummyMO2.source to 400,
+		DummyMO2.run = close,
+		TMGa_1.run = close,
+		TMGa_1.line = close,
+		TEGa_1.push to 200,
+		TEGa_1.source to 200,
+		TEGa_1.run = close,
+		TEGa_1.line = close,
+		TMIn_1.source to 350,
+		TMIn_1.push to 50,
+		TMIn_1.run = open,
+		TMIn_1.line = open,
+		TMAl_1.source to 32,
+		TMAl_1.push to 368,
+		TMAl_1.line = close,
+		TMAl_1.run = close,
+		SiH4_1.line = open,
+		SiH4_1.run = close,
+		SiH4_1.dilute to 50,
+		SiH4_1.source to 10,
+		SiH4_1.inject to 5,
+		SiH4_1.push to 95;
+	40	"stabilize and prep TEGa, TMAL", TEGa_1.line = open, TMAl_1.line = open;
+	20	"and do not stop TMIn", TMIn_1.run = open, DummyMO2.run = close;
+	# 1st  Undoped channel##################################
+	0:45	"AlN 0.85nm", TMAl_1.run = open,
+		Cp2Mg_1.run = close,
+		TEGa_1.run = close,
+		TEGa_1.line = open,
+		DummyMO2.run = close;
+	0:05	"stop AlN", TMAl_1.run = close, Cp2Mg_1.run = open;
+	1:00	"GaN interinterlayer", TEGa_1.run = open, Cp2Mg_1.run = close;
+	0:50	"stop GaN and change Tg", ReactorTemp to 835 in 10,
+		TEGa_1.run = close,
+		TEGa_1.line = close,
+		TMIn_1.run = close,
+		Cp2Mg_1.run = open,
+		DummyMO2.run = open;
+	1:00	"AlInN nid", TMIn_1.run = open,
+		DummyMO2.run = close,
+		TMAl_1.run = open,
+		Cp2Mg_1.run = close,
+		SiH4_1.run = close,
+		PushHydride = 1250;
+	1:00	"prep TEGa", TEGa_1.line = open;
+	10	"Begin GaN n++", TEGa_1.run = open,
+		TMIn_1.run = close,
+		DummyMO2.run = close,
+		TMAl_1.run = close,
+		TMAl_1.line = close,
+		Cp2Mg_1.run = open,
+		SiH4_1.run = open,
+		PushHydride = 1150;
+	30	"Change Tg", ReactorTemp to 975;
+	loop 9  {
+		# loop doped GaN channel ##################################
+	0:46	"(In)GaN 5e12 Si-doped", TEGa_1.run = open,
+		TMIn_1.run = open,
+		DummyMO2.run = close,
+		TMAl_1.run = close,
+		TMAl_1.line = close,
+		Cp2Mg_1.run = close,
+		SiH4_1.run = open,
+		PushHydride = 1150;
+		30	"Stop ,change Temp, NH3, TEGa, stop Indium...", ReactorTemp to 1000,
+		TEGa_1.run = close,
+		DummyMO2.run = open,
+		SiH4_1.run = close,
+		TMIn_1.run = close,
+		Cp2Mg_1.run = open,
+		TMIn_1.line = close,
+		NH3_1.source to 800,
+		RunHydride to 1850,
+		PushHydride to 1850,
+		TEGa_1.source to 30,
+		TEGa_1.push to 370;
+		28	"stabilize";
+		2	"Switch Carrier gas to H2 except MO2", N2.line = close,
+		H2.line = open,
+		N2.run = close,
+		H2.run = open,
+		N2MO1.line = close,
+		H2MO1.line = open,
+		H2PushHyd = open,
+		H2PushMO1 = open,
+		H2PushMO2 = open,
+		Window = open,
+		H2LinerPurge = open;
+		4:00	"Grow Channel", TEGa_1.run = open,
+		TMIn_1.run = close,
+		DummyMO2.run = close,
+		Cp2Mg_1.run = open;
+		30	"Stop ,Prep TMAl, TMIn and back to previous, carrier gas included...", TMAl_1.line = open,
+		TMIn_1.line = open,
+		ReactorTemp to 975,
+		TEGa_1.run = close,
+		DummyMO2.run = open,
+		TMIn_1.run = close,
+		Cp2Mg_1.run = open,
+		NH3_1.source to 2000,
+		RunHydride to 1250,
+		PushHydride to 1250,
+		TEGa_1.source to 200,
+		TEGa_1.push to 200,
+		N2.line = open,
+		H2.line = close,
+		N2.run = open,
+		H2.run = close,
+		H2MO1.line = close,
+		N2MO1.line = open,
+		H2PushHyd = close,
+		H2PushMO1 = close,
+		H2PushMO2 = close,
+		Window = close,
+		H2LinerPurge = close;
+		30	"stabilize";
+		0:45	"Al(In)N 0.85 nm", TMAl_1.run = open,
+		Cp2Mg_1.run = close,
+		TEGa_1.run = close,
+		TEGa_1.line = open,
+		TMIn_1.run = open,
+		DummyMO2.run = close;
+		0:05	"stop AlN", TMAl_1.run = close, Cp2Mg_1.run = open;
+		1:00	"GaN interinterlayer", TEGa_1.run = open, Cp2Mg_1.run = close;
+		0:50	"stop GaN and change Tg", ReactorTemp to 835 in 10,
+		TEGa_1.run = close,
+		TEGa_1.line = close,
+		TMIn_1.run = close,
+		Cp2Mg_1.run = open,
+		DummyMO2.run = open;
+		1:00	"AlInN nid", TMIn_1.run = open,
+		DummyMO2.run = close,
+		TMAl_1.run = open,
+		Cp2Mg_1.run = close,
+		SiH4_1.run = close,
+		PushHydride = 1250;
+		1:00	"prep TEGa", TEGa_1.line = open;
+		10	"Begin GaN n++", TEGa_1.run = open,
+		TMIn_1.run = close,
+		DummyMO2.run = close,
+		TMAl_1.run = close,
+		TMAl_1.line = close,
+		Cp2Mg_1.run = open,
+		SiH4_1.run = open,
+		PushHydride = 1150;
+		30	"Change Tg", ReactorTemp to 975;
+	}
+	1:00	"(In)GaN 2nm", TEGa_1.run = open,
+		TMIn_1.run = open,
+		DummyMO2.run = close,
+		TMAl_1.run = close,
+		TMAl_1.line = close,
+		Cp2Mg_1.run = close;
+	0:02	"stop", TMAl_1.run = close,
+		Cp2Mg_1.run = open,
+		TMIn_1.run = close,
+		TEGa_1.run = close,
+		TEGa_1.line = close,
+		SiH4_1.run = close,
+		DummyMO2.run = open;
+	# End of Run  ##################################
+	0:02	"Close all lines and runs except NH3s", TMIn_1.run = close,
+		TMIn_1.line = close,
+		TMAl_1.run = close,
+		TMAl_1.line = close,
+		TMGa_1.run = close,
+		TMGa_1.line = close,
+		TEGa_1.run = close,
+		TEGa_1.line = close,
+		Cp2Mg_1.run = close,
+		Cp2Mg_1.line = close,
+		DummyMO2.run = close,
+		SiH4_1.line = close,
+		SiH4_1.run = close;
+	0:02	"default set-up, lower NH3_1", NH3_1.source to 500,
+		TMGa_1.source = default,
+		TMGa_1.push = default,
+		TMGa_1.press = default,
+		TEGa_1.source = default,
+		TEGa_1.push = default,
+		TEGa_1.press = default,
+		TMAl_1.source = default,
+		TMAl_1.push = default,
+		TMAl_1.press = default,
+		TMIn_1.source = default,
+		TMIn_1.push = default,
+		TMIn_1.press = default,
+		SiH4_1.source = default,
+		SiH4_1.dilute = default,
+		SiH4_1.inject = default,
+		SiH4_1.press = default,
+		Cp2Mg_1.source = default,
+		Cp2Mg_1.press = default,
+		Cp2Mg_1.push = default;
+	# Cool Down,  ##################################
+	0:02	"change to N2", N2.line = open,
+		N2.run = open,
+		H2.line = close,
+		H2.run = close,
+		H2MO1.line = close,
+		N2MO1.line = open,
+		H2PushHyd = close,
+		H2PushMO1 = close,
+		H2PushMO2 = close,
+		Window = close,
+		H2LinerPurge = close,
+		H2Rotation = close;
+	2:00	ReactorTemp to 300,
+		Rotation to 20,
+		ReactorPress to 200 in 2:00;
+		"wait for temperature < 500", until ReactorTemp << 500;
+	2:00	"switch off NH3s", NH3_1.run = close,
+		NH3_1.line = close,
+		NH3_1.source = default,
+		NH3_2.run = close,
+		NH3_2.line = close,
+		NH3_2.source = default,
+		RunHydride = 3000,
+		PushHydride = 3000,
+		ReactorTemp to 100,
+		ReactorPress to 900;
+	0:02	"switch off heater", ReactorTemp = 100, Heater = off;
+		"wait for temperature < 300", until ReactorTemp << 300;
+	3:00	"refill system", ReactorPress to 950,
+		Rotation to 300,
+		RunMO1 = 2500,
+		RunMO2 = 2500,
+		RunHydride = 5000;
+	3:00	"pump down system", ReactorPress to 50,
+		Rotation to 10,
+		RunMO1 = 200,
+		RunMO2 = 200,
+		RunHydride = 200,
+		LinerPurge = 150;
+	3:00	"refill system, close VentVac", VentVac = close,
+		Rotation to 300,
+		RunMO1 = 2500,
+		RunMO2 = 2500,
+		RunHydride = 5000,
+		LinerPurge = 2000,
+		ReactorPress to 1000;
+	0:05	"ready for open", Control = off,
+		PumpBypass = open,
+		DORVac = open,
+		ReactorPress = 975,
+		RunMO1 = 300,
+		RunMO2 = 300,
+		RunHydride = 300,
+		PushMO1 = 300,
+		PushMO2 = 300,
+		LinerPurge = 150,
+		PushHydride = 300,
+		WindowPurge1 = 100,
+		WindowPurge2 = 100,
+		WindowPurge3 = 100;
+}
+#WININFO 4, 898, 0, 0
+#COLINFO layer 47,3*0,43*45

@@ -1,0 +1,58 @@
+[Info]
+Filetype=SENTECH Instruments SI Systems recipie file
+Anlage=SI 500 Lausanne
+Reaktor=1
+[Lines]
+0=' GaN etching
+1=DIM E_TIME AS INTEGER = 60
+2=PROMPT E_TIME 
+3=Press. wafer back cooling 1000.0 Pa 
+4=Waiting period 30
+5=Source matching manual 64.2 % 68.9 % 
+6=RF matching manual 81.7 % 38.2 % 
+7=Electrode temperature 20.0 °C 
+8=Waiting period 30
+9=Start gas source MFC 2 80.0 sccm ' Cl2
+10=Start gas source MFC 5 27.0 sccm ' Ar
+11=Pressure reactor 1.00 Pa 
+12=Waiting period 60
+13=Source on 50.0 W 
+14=Waiting period 5
+15=Source matching auto
+16=RF generator on power 100.0 W 
+17=RF matching auto
+18=Waiting period E_TIME
+19=RF generator off
+20=Source off
+21=Stop gas MFC 2 ' Cl2
+22=Stop gas MFC 5 ' Ar
+23=Pressure reactor 0.00 Pa 
+24=Waiting period 30
+25=Retract wafer w/o vent 
+[Internal Lines]
+0=' GaN etching
+1=Dim E_TIME As Integer = 60
+2=Prompt E_TIME
+3=OutAA AA_HED 1000.0 Pa
+4=WZeit 30
+5=QMBMan 64.2 % 68.9 %
+6=HFMBMan 81.7 % 38.2 %
+7=OutAA AA_TEL 20.0 °C
+8=WZeit 30
+9=GasEin Q MFC 2 80.0 sccm ' Cl2
+10=GasEin Q MFC 5 27.0 sccm ' Ar
+11=RxDruck 1.00 Pa
+12=WZeit 60
+13=Qein 50.0 W
+14=WZeit 5
+15=QMBAuto
+16=HFein Pwr 100.0 W
+17=HFMBAuto
+18=WZeit E_TIME
+19=HFaus
+20=Qaus
+21=GasAus MFC 2 ' Cl2
+22=GasAus MFC 5 ' Ar
+23=RxDruck 0.00 Pa
+24=WZeit 30
+25=WafAusOB

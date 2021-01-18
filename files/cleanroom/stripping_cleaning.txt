@@ -1,0 +1,12 @@
+General comment: Resist stripping
+
+Description:
+
+This recipe can be followed for strip resists such as: AZ1512, LOR and AZ9260.
+
+Steps
+
+SVC-14 strip: Deep the sample in SVC-14 and sonicate at the appropriate power for 3'.
+IPA cleaning: Deep the sample in IPA and sonicate at the appropriate power for 3'.
+Drying: N2 gun
+O2 plasma: 5' Tepla Gigabatch high power

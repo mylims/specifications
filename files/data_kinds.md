@@ -9,8 +9,8 @@
 
 ## 2. Device fabrication: Cleanroom processing
 
-- cleanroom recipe (txt)
-- mask (file)
+- [cleanroom recipe](./cleanroom/)
+- [fabrication recipe](./recipes/)
 - process characterization
   - SEM
   - AFM
