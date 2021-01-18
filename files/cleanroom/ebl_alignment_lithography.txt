@@ -1,0 +1,17 @@
+Description:
+
+This recipe allows to obtain a 1.6-1.7 µm of resist double layer with features down to 1-2 µm on any kind of substrate wafer (tried so far). This process has been tested for lift-off of metal layers with a total thickness around 190-200 nm.
+
+Steps
+
+O2 plasma cleaning: 1' Tepla Gigabatch high power.
+LOR 5A coating: Coater Z13 6 krpm 30" (layer thickness ~400 nm).
+LOR 5A bake: 190 C hot plate Z13 4' 10''
+PMMA LOR 5A cooling: 3' cooling
+PMMA AZ1512 coating: Coater Z13 6 krpm 30" (layer thickness ~1.1-1.2 µm).
+PMMA AZ1512 bake: 95 C hot plate Z13 1' 30''
+PMMA AZ1512 cooling: 3' cooling
+MLA writing: mask PUT MASK FILE Dose: 52 J/cm2 ,Defocus:0  
+Development: 50'' AZ726 with agitation by tweezer.
+Rinsing: 3' DI water  
+Descum: 1' Tepla Gigabatch high power.

@@ -1,0 +1,12 @@
+Steps
+
+LOR 5A coating: Coater Z13 6 krpm 30" (layer thickness ~400 nm).
+LOR 5A bake: 190 C hot plate Z13 4' 10''
+LOR 5A cooling: 3' cooling
+AZ1512 coating: Coater Z13 6 krpm 30" (layer thickness ~1.1-1.2 µm).
+AZ1512 bake: 95 C hot plate Z13 1' 30''
+AZ1512 cooling: 3' cooling
+MLA writing: mask PUT MASK FILE Dose: 52 J/cm2 ,Defocus:0  
+Development: 45'' AZ726 with agitation by tweezer.
+Rinsing: 3' DI water  
+Descum: 1' Tepla Gigabatch high power.
