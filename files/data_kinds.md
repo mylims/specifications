@@ -4,17 +4,17 @@
 
 - wafer properties (txt)
 - materials characterization
-  - XRD
-  - AFM
+  - [XRD](./characterization/XRD_sample.raw)
+  - [AFM](./characterization/AFM_sample.spm)
 
 ## 2. Device fabrication: Cleanroom processing
 
 - [cleanroom recipe](./cleanroom/)
 - [fabrication recipe](./recipes/)
 - process characterization
-  - SEM
-  - AFM
-  - filmmetrics
+  - [SEM](./characterization/SEM_sample.tif)
+  - [AFM](./characterization/AFM_sample.spm)
+  - [filmmetrics](./characterization/filmmetrics_sample.fmspe)
 
 ## 3. Characterization (measurements)
 
