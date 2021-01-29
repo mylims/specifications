@@ -19,7 +19,7 @@
 ## 3. Characterization (measurements)
 
 - [IV curves](./iv_curves/)
-- thermal images
+- [thermal images](./thermal_resistance/ir_photos/)
 - [thermal resistance](./thermal_resistance)
 - plots (images)
 
